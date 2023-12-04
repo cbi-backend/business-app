@@ -8,10 +8,10 @@ import com.business.card.usercapability.model.User;
 
 public interface UserRepository extends MongoRepository<User,String> {
     
-    @Query("{'email': ?0,'status': 'CREATED'}")
+    @Query("{'social.email': ?0,'status': 'CREATED'}")
     public User findByEmail(String email);
 
-    @Query("{'email': ?0,'password': ?1,'status': 'CREATED'}")
+    @Query("{'social.email': ?0,'password': ?1,'status': 'CREATED'}")
     public User validateUser(String email, String password);
 
     @Query("{'social.email': ?0,'status': 'CREATED'}")
