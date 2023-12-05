@@ -1,4 +1,4 @@
-package com.business.card.admincapability;
+package com.business.card;
 
 import org.springframework.context.annotation.Configuration;
 
