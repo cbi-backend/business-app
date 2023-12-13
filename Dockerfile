@@ -6,8 +6,8 @@ RUN mvn package
 
 FROM openjdk:17
 
-ARG JAR_FILE=card-2023.11.1-SNAPSHOT.jar
+ARG JAR_FILE=card-2023.12.1-SNAPSHOT.jar
 
 COPY --from=maven /target/${JAR_FILE} .
 
-ENTRYPOINT ["java","-jar","card-2023.11.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","card-2023.12.1-SNAPSHOT.jar"]
