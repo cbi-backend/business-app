@@ -74,8 +74,14 @@ public class UserService implements UserDetailsService{
     }
 
     private User prepareUserdataForUpdation(User user, User oldUser) {
-        if (user.getName() != null) {
+        if (user.getName() != null && oldUser.getName() != null) {
             oldUser.setName(user.getName());
+            if (user.getName().getFirstName() != null) {
+                oldUser.getName().setFirstName(user.getName().getFirstName());
+            }
+            if (user.getName().getLastName() != null) {
+                oldUser.getName().setLastName(user.getName().getLastName());
+            }
         }
         if (user.getPhone() != null && oldUser.getPhone() != null) {
             if (user.getPhone().getCountryCode() != null) {

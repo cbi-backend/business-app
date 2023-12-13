@@ -12,20 +12,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Document("user")
 public class User {
     @Id
-    private String id; // AUTO 
-    private Name name;
-    private Phone phone;
-    private Address address;
-    private Social social;
-    private Date dateOfBirth;
-    private String gender;
-    private String image;
-    private Set<Role> roles;
-    private String status;  // AUTO 
+    private String id; // auto generated 
+    private Name name; // editable - {"firstName":"Jhon","lastName":"Smith"}
+    private Phone phone; // editable - {"countryCode":"+91","number":"9876543210"}
+    private Address address; // editable - { "addressLine1":"123/45", "addressLine2":"ABC Streat, DEF", "city":"HIJK", "state":"LMNOP", "country":"QRSTUV", "postalCode":"600000" }
+    private Social social; // editable - {"email":"abc@def.hij"}
+    private Date dateOfBirth; // editable
+    private String gender; // editable
+    private String image; // editable
+    private Set<Role> roles; // auto generated - USER
+    private String status;  // auto generated 
     transient private String password; // READ ONLY & ENCRIPTED 
-    private Date createdAt; // AUTO 
-    private Date updatedAt; // AUTO 
-    private String userId; // AUTO 
+    private Date createdAt; // auto generated 
+    private Date updatedAt; // auto generated 
+    private String userId; // auto generated 
     
     public String getId() {
         return id;

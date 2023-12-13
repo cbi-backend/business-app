@@ -11,18 +11,18 @@ public class BusinessCardTemplate {
 
 	@Id
 	private String id; // auto generated
-	private List<Element> elements;
-	private String primary_color;
-	private String secondary_color;
-	private String acent_color;
-	private String color;
-	private String raw_conetent;
-	private String design_specific;
-	private String type;
-	private String last_updated_by_id;  // auto generated
+	private List<Element> elements; // editable
+	private String primary_color; // editable
+	private String secondary_color; // editable
+	private String acent_color; // editable
+	private String color; // editable
+	private String raw_conetent; // editable
+	private String design_specific; // editable
+	private String type; // editable
+	private String template_id;
+	private String last_updated_by_id; // editable
 	private String owner_id;  // auto generated
 	private String status;  // auto generated
-	private String template_id;  // auto generated
 	private Date added_date; // auto generated
 	private Date last_updated_date; // auto generated
 	

@@ -92,11 +92,9 @@ public class BusinessCardDataService {
 			oldBusinessCardData.setType(businessCardData.getType());
 		}
 		oldBusinessCardData.setLast_updated_date(new Date(System.currentTimeMillis()));
-		// TODO: remove the hard coded value REST API for Last_updated_by_id
 		if (businessCardData.getLast_updated_by_id() != null) {
 			oldBusinessCardData.setLast_updated_by_id(businessCardData.getLast_updated_by_id());
 		}
-		oldBusinessCardData.setLast_updated_by_id("REST API");
 		return oldBusinessCardData;
 	}
 
@@ -112,7 +110,6 @@ public class BusinessCardDataService {
 	
 	private void prepareDataForCreation(BusinessCardData businessCardData, String status) {
 		businessCardData.setId(null);
-		businessCardData.setLast_updated_by_id("Back end");
 		businessCardData.setStatus(status);
 		businessCardData.setCard_id("BUSINESS_CARD_APP_CARD_" + System.currentTimeMillis());
 		businessCardData.setAdded_date(new Date(System.currentTimeMillis()));

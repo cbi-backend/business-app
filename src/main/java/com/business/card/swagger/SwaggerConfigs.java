@@ -1,11 +1,11 @@
-// package com.business.card.swagger;
+package com.business.card.swagger;
 
-// import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Configuration;
 
-// import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-// @Configuration
-// @EnableSwagger2
-// public class SwaggerConfigs {
+@Configuration
+@EnableSwagger2
+public class SwaggerConfigs {
 
-// }
+}

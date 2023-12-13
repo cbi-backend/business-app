@@ -74,11 +74,9 @@ public class BusinessCardTemplateService {
 			oldBusinessCardTemplate.setType(businessCardTemplate.getType());
 		}
 		oldBusinessCardTemplate.setLast_updated_date(new Date(System.currentTimeMillis()));
-		// TODO: remove the hard coded value REST API for Last_updated_by_id
 		if (businessCardTemplate.getLast_updated_by_id() != null) {
 			oldBusinessCardTemplate.setLast_updated_by_id(businessCardTemplate.getLast_updated_by_id());
 		}
-		oldBusinessCardTemplate.setLast_updated_by_id("REST API");
 		return oldBusinessCardTemplate;
 	}
 
@@ -89,8 +87,6 @@ public class BusinessCardTemplateService {
 	
 	private void prepareDataForCreation(BusinessCardTemplate businessCardTemplate) {
 		businessCardTemplate.setId(null);
-		businessCardTemplate.setLast_updated_by_id("Back end");
-		businessCardTemplate.setOwner_id("REST API");
 		businessCardTemplate.setStatus("CREATED");
 		businessCardTemplate.setTemplate_id("BUSINESS_CARD_APP_TEMPLATE_" + System.currentTimeMillis());
 		businessCardTemplate.setAdded_date(new Date(System.currentTimeMillis()));

@@ -1,0 +1,50 @@
+BusinessCardTemplate -> business-card-template-controller
+	id; // auto generated
+	elements; // editable
+	primary_color; // editable
+	secondary_color; // editable
+	acent_color; // editable
+	color; // editable
+	raw_conetent; // editable
+	design_specific; // editable
+	type; // editable
+	template_id;
+	last_updated_by_id; // editable
+	owner_id;  // auto generated
+	status;  // auto generated
+	added_date; // auto generated
+	last_updated_date; // auto generated
+
+User -> user-controller
+    id // auto generated
+    name // editable - {"firstName":"Jhon","lastName":"Smith"}
+    phone // editable - {"countryCode":"+91","number":"9876543210"}
+    address // editable - { "addressLine1":"123/45", "addressLine2":"ABC Streat, DEF", "city":"HIJK", "state":"LMNOP", "country":"QRSTUV", "postalCode":"600000" }
+    social // editable - {"email":"abc@def.hij"}
+    dateOfBirth // editable
+    gender // editable
+    image // editable
+    roles // auto generated - USER
+    status  // auto generated 
+    password // READ ONLY & ENCRIPTED 
+    createdAt // auto generated 
+    updatedAt // auto generated 
+    userId // auto generated 
+
+BusinessCardData -> business-card-data-controller
+	id // auto generated
+	elements // editable
+	primary_color // editable
+	secondary_color // editable
+	acent_color // editable
+	color // editable
+	raw_conetent // editable
+	design_specific // editable
+	type // editable
+	template_id
+	owner_id
+	last_updated_by_id // editable
+	status  // auto generated
+	card_id  // auto generated
+	added_date // auto generated
+	last_updated_date // auto generated
