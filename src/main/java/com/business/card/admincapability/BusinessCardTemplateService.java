@@ -1,10 +1,9 @@
 package com.business.card.admincapability;
 
-import java.text.Collator;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,13 +17,15 @@ public class BusinessCardTemplateService {
 	
 	public BusinessCardTemplate getBusinessCardTemplateById(String id) {
 		if (this.businessCardTemplateRepository.existsById(id)) {
-			if (this.businessCardTemplateRepository.findById(id) != null &&
-					this.businessCardTemplateRepository.findById(id).get() != null &&
-					! this.businessCardTemplateRepository.findById(id).get().getStatus().equals("DELETED")) {
-				return this.businessCardTemplateRepository.findById(id).get();
+			Optional<BusinessCardTemplate> templateById = this.businessCardTemplateRepository.findById(id);
+			if (templateById != null &&
+					templateById.get() != null &&
+					! templateById.get().getStatus().equals("DELETED")) {
+				return templateById.get();
 			}
 		}
-		return null;
+		throw new RuntimeException("Invalid action",
+			new Throwable("data not found"));
 	}
 
 	public List<BusinessCardTemplate> getBusinessCardTemplates() {
@@ -35,13 +36,15 @@ public class BusinessCardTemplateService {
 	
 	public BusinessCardTemplate updateBusinessCardTemplate(String id, BusinessCardTemplate businessCardTemplate) {
 		if (this.businessCardTemplateRepository.existsById(id)) {
-			if (this.businessCardTemplateRepository.findById(id) != null &&
-					this.businessCardTemplateRepository.findById(id).get() != null ) {
-				BusinessCardTemplate tobeUpdatedBusinessCardTemplate = prepareDataForUpdation(businessCardTemplate, this.businessCardTemplateRepository.findById(id).get());
+			Optional<BusinessCardTemplate> templateById = this.businessCardTemplateRepository.findById(id);
+			if (templateById != null &&
+					templateById.get() != null ) {
+				BusinessCardTemplate tobeUpdatedBusinessCardTemplate = prepareDataForUpdation(businessCardTemplate, templateById.get());
 				return this.businessCardTemplateRepository.save(tobeUpdatedBusinessCardTemplate);
 			}
 		}
-		return null;
+		throw new RuntimeException("Invalid action",
+			new Throwable("data not found"));
 	}
 	
 	private BusinessCardTemplate prepareDataForUpdation(BusinessCardTemplate businessCardTemplate,
@@ -96,15 +99,17 @@ public class BusinessCardTemplateService {
 
 	public BusinessCardTemplate deleteBusinessCardTemplateById(String id) {
 		if (this.businessCardTemplateRepository.existsById(id)) {
-			if (this.businessCardTemplateRepository.findById(id) != null &&
-					this.businessCardTemplateRepository.findById(id).get() != null &&
-					! this.businessCardTemplateRepository.findById(id).get().getStatus().equals("DELETED") ) {
-				BusinessCardTemplate businessCardTemplateToBeUpdated = this.businessCardTemplateRepository.findById(id).get();
+			Optional<BusinessCardTemplate> templateById = this.businessCardTemplateRepository.findById(id);
+			if (templateById != null &&
+					templateById.get() != null &&
+					! templateById.get().getStatus().equals("DELETED") ) {
+				BusinessCardTemplate businessCardTemplateToBeUpdated = templateById.get();
 				businessCardTemplateToBeUpdated.setStatus("DELETED");
 				return this.businessCardTemplateRepository.save(businessCardTemplateToBeUpdated);
 			}
 		}
-		return null;
+		throw new RuntimeException("Invalid action",
+			new Throwable("data not found"));
 	}
 	
 	

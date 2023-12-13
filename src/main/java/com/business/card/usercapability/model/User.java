@@ -1,7 +1,7 @@
 package com.business.card.usercapability.model;
 
-import java.sql.Blob;
 import java.util.Date;
+import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,11 +20,13 @@ public class User {
     private Date dateOfBirth;
     private String gender;
     private String image;
+    private Set<Role> roles;
     private String status;  // AUTO 
     transient private String password; // READ ONLY & ENCRIPTED 
     private Date createdAt; // AUTO 
     private Date updatedAt; // AUTO 
     private String userId; // AUTO 
+    
     public String getId() {
         return id;
     }
@@ -100,8 +102,31 @@ public class User {
         this.userId = userId;
     }
     
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    public Set<Role> getRoles() {
+        return roles;
+    }
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+    
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", name=" + name + ", phone=" + phone + ", address=" + address + ", social=" + social
+                + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", image=" + image + ", roles=" + roles
+                + ", status=" + status + ", password=" + password + ", createdAt=" + createdAt + ", updatedAt="
+                + updatedAt + ", userId=" + userId + "]";
+    }
+    public User() {
+    }
     public User(String id, Name name, Phone phone, Address address, Social social, Date dateOfBirth, String gender,
-            String image, String status, String password, Date createdAt, Date updatedAt, String userId) {
+            String image, Set<Role> roles, String status, String password, Date createdAt, Date updatedAt,
+            String userId) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -110,26 +135,12 @@ public class User {
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.image = image;
+        this.roles = roles;
         this.status = status;
         this.password = password;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.userId = userId;
-    }
-    public User() {
-    }
-    public String getStatus() {
-        return status;
-    }
-    public void setStatus(String status) {
-        this.status = status;
-    }
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", name=" + name + ", phone=" + phone + ", address=" + address + ", social=" + social
-                + ", dateOfBirth=" + dateOfBirth + ", gender=" + gender + ", image=" + image + ", status=" + status
-                + ", password=" + password + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", userId="
-                + userId + "]";
     }
     
 }

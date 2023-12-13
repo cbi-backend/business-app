@@ -1,19 +1,46 @@
 package com.business.card.usercapability;
 
 import java.util.Base64;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.business.card.usercapability.model.Role;
 import com.business.card.usercapability.model.User;
 
-@Service
-public class UserService {
+@Service(value = "userService")
+public class UserService implements UserDetailsService{
     
     @Autowired
     private UserRepository userRepository;
+
+
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(username);
+        System.out.println("fetched user : " + user);
+        if(user == null){
+            throw new UsernameNotFoundException("Invalid username or password.");
+        }
+        return new org.springframework.security.core.userdetails.User(user.getSocial().getEmail(), user.getPassword(), getAuthority(user));
+    }
+    
+    private Set<SimpleGrantedAuthority> getAuthority(User user) {
+        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+        user.getRoles().forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+        });
+        return authorities;
+    }
 
     public User saveUser(User user) {
         prepareUserdataForCreation(user);
@@ -22,6 +49,7 @@ public class UserService {
 
     private void prepareUserdataForCreation(User user) {
         user.setId(null);
+        user.setRoles(Collections.singleton(new Role(0,"USER","role for user")));
         user.setPassword(encodedPassword(user));
         user.setStatus("CREATED");
         user.setCreatedAt(new Date(System.currentTimeMillis()));        
@@ -30,18 +58,19 @@ public class UserService {
     }
 
     private String encodedPassword(User user) {
-        return Base64.getEncoder().encodeToString(new String(user.getPassword() + "salt").getBytes());
+        return new BCryptPasswordEncoder().encode(user.getPassword());
     }
 
     public User updateUser(String id, User user) {
         if (this.userRepository.existsById(id)) {
-            if (this.userRepository.findById(id) != null &&
-                this.userRepository.findById(id).get() != null) {
-                User tobeupdated = prepareUserdataForUpdation(user, this.userRepository.findById(id).get());
+            Optional<User> userById = this.userRepository.findById(id);
+            if (userById != null && userById.get() != null) {
+                User tobeupdated = prepareUserdataForUpdation(user, userById.get());
               return this.userRepository.save(tobeupdated);  
             }
         }
-        return null;
+		throw new RuntimeException("Invalid action",
+			new Throwable("data not found"));
     }
 
     private User prepareUserdataForUpdation(User user, User oldUser) {
@@ -101,7 +130,8 @@ public class UserService {
               return user.get();  
             }
         }
-        return null;
+		throw new RuntimeException("Invalid action",
+			new Throwable("data not found"));
     }
 
     public User getUserByEmail(String email) {
@@ -114,7 +144,8 @@ public class UserService {
             validUser.getSocial().getEmail().equals(user.getSocial().getEmail())) {
             return user;
         }
-         return null;    
+		throw new RuntimeException("Invalid action",
+			new Throwable("data not found"));
     }
 
     public User updateUserPassword(User user) {
@@ -123,7 +154,8 @@ public class UserService {
         if (updatedResponse != 0) {
             return user;
         }
-         return null;    
+		throw new RuntimeException("Invalid action",
+			new Throwable("data not found"));  
     }
 
     public User deleteUser(String id) {
@@ -138,6 +170,7 @@ public class UserService {
             
             }
         }
-        return null;
+		throw new RuntimeException("Invalid action",
+			new Throwable("data not found"));
     }
 }
